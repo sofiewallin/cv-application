@@ -6,7 +6,7 @@
 export default class Model {
     public apiUrl: string;
 
-    constructor(apiUrl: string) {
-        this.apiUrl = apiUrl;
+    constructor() {
+        this.apiUrl = 'http://127.0.0.1:8000/api';
     }
 }
