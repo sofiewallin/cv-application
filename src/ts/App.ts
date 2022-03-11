@@ -1,4 +1,5 @@
 import IModule from "./interfaces/IModule";
+import ProjectsContent from "./modules/ProjectsContent";
 import SkillsContent from "./modules/SkillsContent";
 
 /**
@@ -17,13 +18,18 @@ export default class App {
         this.projectsContent = document.querySelector('.projects-content') as HTMLElement;
         this.skillsContent = document.querySelector('.skills-content') as HTMLElement;
         this.experienceContent = document.querySelector('.experience-content') as HTMLElement;
+
+        this.setMenuToggle();
     }
 
     /**
      * Render application.
      */
     async render(): Promise<void> {
-        // Add navigation module in header
+        // Add projects content module in matching content container
+        await this.appendModule(new ProjectsContent(), this.projectsContent);
+
+        // Add skills content module in matching content container
         await this.appendModule(new SkillsContent(), this.skillsContent);
     }
 
@@ -51,5 +57,38 @@ export default class App {
             messageElement.classList.remove(type, 'is-active');
             messageElement.innerText = '';
         }, 3000);
+    }
+
+    /**
+     * Set toggle function on menu toggle button.
+     * 
+     * Sets a toggle function on the toggle button
+     * so that it can show and hide the menu.
+     */
+    async setMenuToggle(): Promise<void> {
+        // Get button and menu
+        const toggleMenuButton = document.querySelector('.toggle-menu-button');
+        const mainMenu = document.querySelector('#main-menu');
+        
+        // Add event listener
+        toggleMenuButton.addEventListener('click', e => {
+            mainMenu.classList.toggle('hidden');
+            toggleMenuButton.classList.toggle('hide');
+        
+            // Toggle ARIA expanded attribute
+            if (toggleMenuButton.getAttribute('aria-expanded') === 'false') {
+                toggleMenuButton.setAttribute('aria-expanded', 'true');
+            } else {
+                toggleMenuButton.setAttribute( 'aria-expanded', 'false');
+            }
+        
+            // Toggle button text
+            let hiddenTextElement = toggleMenuButton.querySelector('.hidden-visually') as HTMLElement;
+            if (hiddenTextElement.innerText === 'Show menu') {
+                hiddenTextElement.innerText = 'Hide menu';
+            } else {
+                hiddenTextElement.innerText = 'Show menu';
+            }
+        });
     }
 }

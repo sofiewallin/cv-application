@@ -1,9 +1,9 @@
+import App from "../App";
 import Module from "./Module";
 import Skill from "../models/Skill";
 import ISkill from "../interfaces/ISkill";
 import IModule from "../interfaces/IModule";
 import IError from "../interfaces/IError";
-import App from "../App";
 
 /**
  * Skills content module.
@@ -66,13 +66,13 @@ export default class SkillsContent extends Module implements IModule {
     async createSkillList(skillType: string, container: HTMLDivElement): Promise<HTMLDivElement> {
         // Filter skills and sort them in order
         const filteredSkills = this.skills.filter(skill => skill.type === skillType);
-        filteredSkills.sort((a, b) => (a.order > b.order) ? 1 : -1);
+        filteredSkills.sort((a, b) => a.order - b.order);
 
         // Create list items from filtered skills
         let listItems: HTMLLIElement[] = [];
         const result = filteredSkills.map(async skill => {
-            const listItem = await this.createListITem(`skill-${skill.id}`)
-            listItem.innerText = skill.title;
+            const listItem = await this.createListItem(`skill-${skill.id}`);
+            listItem.innerHTML = skill.title;
 
             // Add list item to list
             listItems.push(listItem);
@@ -84,7 +84,7 @@ export default class SkillsContent extends Module implements IModule {
         
         if (listItems.length > 0) {
             // Create skills column for skills and add to container
-            columnDiv = await this.createDiv([`${skillType.toLowerCase()}-skills`]);
+            columnDiv = await this.createDiv(['column']);
             container.append(columnDiv);
 
             // Create heading and add to skills column
@@ -92,7 +92,7 @@ export default class SkillsContent extends Module implements IModule {
             columnDiv.append(heading);
 
             // Create unordered list with created list items
-            const skillList = await this.createUlList(listItems);
+            const skillList = await this.createUlList(listItems, [`${skillType.toLowerCase()}-skill-list`]);
             columnDiv.append(skillList);
         }
         

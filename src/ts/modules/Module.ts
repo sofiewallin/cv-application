@@ -9,13 +9,16 @@ export default class Module {
     /**
      * Create article.
      * 
-     * Creates and returns an article element.
+     * Creates and returns an article element
+     * with optional classes.
      */
-    async createArticle(htmlClasses: string[]): Promise<HTMLElement> {
+    async createArticle(htmlClasses?: string[]): Promise<HTMLElement> {
         const article = document.createElement('article') as HTMLElement;
-        htmlClasses.forEach(htmlClass => {
-            article.classList.add(htmlClass);
-        });
+        if (htmlClasses) {
+            htmlClasses.forEach(htmlClass => {
+                article.classList.add(htmlClass);
+            });
+        }
 
         return article;
     }
@@ -23,11 +26,12 @@ export default class Module {
     /**
      * Create div.
      * 
-     * Creates and returns a div element.
+     * Creates and returns a div element
+     * with optional classes.
      */
     async createDiv(htmlClasses?: string[]): Promise<HTMLDivElement> {
         const div = document.createElement('div') as HTMLDivElement;
-        if (htmlClasses.length > 0) {
+        if (htmlClasses) {
             htmlClasses.forEach(htmlClass => {
                 div.classList.add(htmlClass);
             });
@@ -39,7 +43,9 @@ export default class Module {
     /**
      * Create heading.
      * 
-     * Creates and returns a heading element.
+     * Creates and returns a heading element
+     * with specified level of heading, inner HTML
+     * and optional classes.
      */
     async createHeading(hLevel: number, innerHTML: string, htmlClasses?: string[]): Promise<HTMLHeadingElement> {
         const heading = document.createElement(`h${hLevel}`) as HTMLHeadingElement;
@@ -56,7 +62,8 @@ export default class Module {
     /**
      * Create paragraph.
      * 
-     * Creates and returns a paragraph element.
+     * Creates and returns a paragraph element
+     * with inner HTML and optional classes.
      */
     async createParagraph(innerHTML: string, htmlClasses?: string[]): Promise<HTMLParagraphElement> {
         const paragraph = document.createElement('p') as HTMLParagraphElement;
@@ -71,13 +78,38 @@ export default class Module {
     }
 
     /**
+     * Create anchor link.
+     * 
+     * Creates and returns a anchor element
+     * with a href value, inner HTML and 
+     * optional classes.
+     */
+    async createLink(href: string, innerHTML: string, htmlClasses?: string[]): Promise<HTMLAnchorElement> {
+        const link = document.createElement('a') as HTMLAnchorElement;
+        link.href = href;
+        link.innerHTML = innerHTML;
+        if (htmlClasses) {
+            htmlClasses.forEach(htmlClass => {
+                link.classList.add(htmlClass);
+            });
+        }
+
+        return link;
+    }
+
+    /**
      * Create unordered list.
      * 
-     * Creates and returns a ul element.
+     * Creates and returns a ul element
+     * with list items and optional classes.
      */
-    async createUlList(listItems: HTMLLIElement[], id?: string): Promise<HTMLUListElement> {
+    async createUlList(listItems: HTMLLIElement[], htmlClasses?: string[]): Promise<HTMLUListElement> {
         const ul = document.createElement('ul') as HTMLUListElement;
-        if (id) ul.id = id;
+        if (htmlClasses) {
+            htmlClasses.forEach(htmlClass => {
+                ul.classList.add(htmlClass);
+            });
+        }
         listItems.forEach(listItem => {
             ul.append(listItem);
         });
@@ -86,11 +118,12 @@ export default class Module {
     }
 
     /**
-     * Create unordered list.
+     * Create list item.
      * 
-     * Creates and returns a ul element.
+     * Creates and returns a li element
+     * with optional id.
      */
-     async createListITem(id?: string): Promise<HTMLLIElement> {
+     async createListItem(id?: string): Promise<HTMLLIElement> {
         const li = document.createElement('li') as HTMLLIElement;
         if (id) li.id = id;
 
@@ -98,75 +131,23 @@ export default class Module {
     }
 
     /**
-     * Create form.
+     * Create figure with image.
      * 
-     * Creates and returns a form element.
+     * Creates and returns a figure element
+     * with optional classes and a image.
      */
-     async createForm(htmlClasses?: string[], id?: string): Promise<HTMLFormElement> {
-        const form = document.createElement('form') as HTMLFormElement;
-        form.action = '/';
-        if (id) form.id = id;
+     async createFigureWithImage(imgSrc: string, imgAlt: string, htmlClasses?: string[]): Promise<HTMLElement> {
+        const figure = document.createElement('figure') as HTMLElement;
         if (htmlClasses) {
             htmlClasses.forEach(htmlClass => {
-                form.classList.add(htmlClass);
+                figure.classList.add(htmlClass);
             });
         }
-        form.noValidate = true;
+        const image = document.createElement('img') as HTMLImageElement;
+        image.src = imgSrc;
+        image.alt = imgAlt;
+        figure.append(image);
 
-        return form;
-    }
-
-    /**
-     * Create button.
-     * 
-     * Creates and returns a button element.
-     */
-    async createButton(innerHTML: string, isSubmit: boolean, htmlClasses?: string[]): Promise<HTMLButtonElement> {
-        const button = document.createElement('button') as HTMLButtonElement;
-        button.innerHTML = innerHTML;
-        if (isSubmit) button.type = 'submit';
-        if (htmlClasses) {
-            htmlClasses.forEach(htmlClass => {
-                button.classList.add(htmlClass);
-            });
-        }
-        return button;
-    }
-
-    /**
-     * Set toggle function on element.
-     * 
-     * Sets a toggle function on a clickable element
-     * that controls a specific container.
-     */
-    async setVisibilityToggle(
-         elementToClick: HTMLButtonElement|HTMLHeadingElement, 
-         elementToBeToggled: HTMLElement, 
-         hiddenText: string
-    ): Promise<void> {
-        // Set neccesary attributes
-        elementToClick.setAttribute('aria-controls', elementToBeToggled.id);
-        elementToClick.setAttribute('aria-expanded', 'false');
-        
-        // Add event listener
-        elementToClick.addEventListener('click', e => {
-            elementToBeToggled.classList.toggle('hidden');
-            elementToClick.classList.toggle('hide');
-        
-            // Toggle ARIA expanded attribute
-            if (elementToClick.getAttribute('aria-expanded') === 'false') {
-                elementToClick.setAttribute('aria-expanded', 'true');
-            } else {
-                elementToClick.setAttribute( 'aria-expanded', 'false');
-            }
-        
-            // Toggle button text
-            let hiddenTextElement = elementToClick.querySelector('.hidden-visually') as HTMLElement;
-            if (hiddenTextElement.innerText === `Show ${hiddenText}`) {
-                hiddenTextElement.innerText = `Hide ${hiddenText}`;
-            } else {
-                hiddenTextElement.innerText = `Show ${hiddenText}`;
-            }
-        });
+        return figure;
     }
 }
