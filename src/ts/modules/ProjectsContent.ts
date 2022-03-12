@@ -11,7 +11,7 @@ import IError from "../interfaces/IError";
  * @author: Sofie Wallin
  */
 export default class ProjectsContent extends Module implements IModule {
-    private projects: IProject[];
+    private projects: IProject[] = [];
 
     /**
      * Get all projects from API.
@@ -33,7 +33,7 @@ export default class ProjectsContent extends Module implements IModule {
 
     async create(): Promise<HTMLElement> {
         // Create projects container and set as module
-        const projectsDiv = await this.createDiv(['projects']);
+        const projectsDiv = await this.createDiv(['projects-container']);
         this.module = projectsDiv;
 
         // Get all projects
@@ -56,11 +56,14 @@ export default class ProjectsContent extends Module implements IModule {
         // Create list items from filtered projects
         let listItems: HTMLLIElement[] = [];
         const result = this.projects.map(async project => {
+            // Create list item
             const listItem = await this.createListItem(`project-${project.id}`);
 
+            // Create article and add to list item
             const article = await this.createArticle();
             listItem.append(article);
 
+            // Create figure with image and add to article
             const baseUrl = 'http://127.0.0.1:8000';
             const figure = await this.createFigureWithImage(
                 `${baseUrl}/storage/uploads/${project.logo}`, // href 
@@ -68,16 +71,19 @@ export default class ProjectsContent extends Module implements IModule {
                 ['project-logo'] // classes
             );
             article.append(figure);
-
-            const title = await this.createHeading(3, project.title);
-            article.append(title);
-
+            
+            // Create title heading and add to article
+            const titleHeading = await this.createHeading(3, project.title);
+            article.append(titleHeading);
+            
+            // Create paragraph with project type and project description if there is a description
             if (project.description) {
                 const paragraph = await this.createParagraph(
                     `<span class="project-type">${project.type} project &#8212;</span> ${project.description}`);
                 article.append(paragraph);
             }
 
+            // Create link to website if there is one
             if (project.website) {
                 const link = await this.createLink(project.website, 'View project');
                 article.append(link);

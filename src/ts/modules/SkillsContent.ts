@@ -11,7 +11,7 @@ import IError from "../interfaces/IError";
  * @author: Sofie Wallin
  */
 export default class SkillsContent extends Module implements IModule {
-    private skills: ISkill[];
+    private skills: ISkill[] = [];
 
     /**
      * Get all skills from API.
@@ -33,7 +33,7 @@ export default class SkillsContent extends Module implements IModule {
 
     async create(): Promise<HTMLElement> {
         // Create skills container and set as module
-        const skillsDiv = await this.createDiv(['skills']);
+        const skillsDiv = await this.createDiv(['skills-container']);
         this.module = skillsDiv;
 
         // Get all skills
@@ -71,6 +71,7 @@ export default class SkillsContent extends Module implements IModule {
         // Create list items from filtered skills
         let listItems: HTMLLIElement[] = [];
         const result = filteredSkills.map(async skill => {
+            // Create list item
             const listItem = await this.createListItem(`skill-${skill.id}`);
             listItem.innerHTML = skill.title;
 

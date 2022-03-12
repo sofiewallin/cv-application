@@ -1,6 +1,7 @@
 import IModule from "./interfaces/IModule";
 import ProjectsContent from "./modules/ProjectsContent";
 import SkillsContent from "./modules/SkillsContent";
+import ExperienceContent from "./modules/ExperienceContent";
 
 /**
  * Main application file.
@@ -31,6 +32,9 @@ export default class App {
 
         // Add skills content module in matching content container
         await this.appendModule(new SkillsContent(), this.skillsContent);
+
+        // Add experience content module in matching content container
+        await this.appendModule(new ExperienceContent(), this.experienceContent);
     }
 
     /**
