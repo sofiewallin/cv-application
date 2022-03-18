@@ -4,7 +4,33 @@ A personal portfolio and resume website built with TypeScript, HTML and Sass. Th
 
 ## The website
 
-The website was developed object-oriented with TypeScript. The separate REST API:s public routes are consumed by the website using TypeScript and Fetch API. Webpack was used to bundle all the TypeScript code and allow use of Sass for styling etc.
+The website was developed object-oriented with TypeScript. The separate REST API:s public routes are consumed by the website using TypeScript and Fetch API. Node.js and webpack was used to bundle all the TypeScript code and allow use of Sass for styling etc.
+
+### Development server and build
+
+There are two separate scripts in `package.json`. To run the development server use the command `npm run devStart` and to run the build for production use the command `npm run build`. Development files are located in `src/` and the production build end up in `dist/`.
+
+### Files and structure
+
+#### Webpack configurations
+
+Configurations for webpack are made in separate files for development and production. Common configurations can be found in `webpack.common.js`, development configurations can be found in `webpack.dev.js` and production configurations can be found in `webpack.prod.js`.
+
+#### Entry point
+
+The entry point for webpack and the bundle is in `src/index.ts`. It renders the application and imports style.
+
+#### TypeScript
+
+Configurations for TypeScript are made in `tsconfig.json`.The TypeScript-application exist in `src/ts/`. The application entry point is `App.ts` which adds three modules that can be found in `src/ts/modules/`. The modules uses models (`src/ts/models`) to consume the API.
+
+#### Sass
+
+The Sass stylesheets are divides in three separate files: 
+
+- `_base.scss` holds resets and basic style, colors, typography and overall layout. 
+- ` _utilities.scss` holds variables, mixins and helper classes.
+_ `_modules.scss` holds style specific to different modules.
 
 ## Project with three parts
 
