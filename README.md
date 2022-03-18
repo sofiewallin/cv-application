@@ -26,7 +26,7 @@ The entry point for webpack and the bundle is in `src/index.ts`. It renders the 
 
 #### TypeScript
 
-Configurations for TypeScript are made in `tsconfig.json`. The TypeScript-application exist in `src/ts/`. The application entry point is `App.ts` which adds three modules that can be found in `src/ts/modules/`. The modules uses models in `src/ts/models` to consume the API, the api url is set in `Model.ts`.
+Configurations for TypeScript are made in `tsconfig.json`. The TypeScript-application exists in `src/ts/`. The application entry point is `App.ts` which adds three modules that can be found in `modules/`. The modules uses models in `models/` to consume the API, the api url is set in `Model.ts`.
 
 #### Sass
 
