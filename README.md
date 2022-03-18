@@ -14,7 +14,11 @@ There are two separate scripts in `package.json`. To run the development server 
 
 #### Webpack configurations
 
-Configurations for webpack are made in separate files for development and production. Common configurations can be found in `webpack.common.js`, development configurations can be found in `webpack.dev.js` and production configurations can be found in `webpack.prod.js`.
+Configurations for webpack are made in separate files for development and production: 
+
+- Common configurations can be found in `webpack.common.js`.
+- Development configurations can be found in `webpack.dev.js`.
+- Production configurations can be found in `webpack.prod.js`.
 
 #### Entry point
 
@@ -22,7 +26,7 @@ The entry point for webpack and the bundle is in `src/index.ts`. It renders the 
 
 #### TypeScript
 
-Configurations for TypeScript are made in `tsconfig.json`.The TypeScript-application exist in `src/ts/`. The application entry point is `App.ts` which adds three modules that can be found in `src/ts/modules/`. The modules uses models (`src/ts/models`) to consume the API.
+Configurations for TypeScript are made in `tsconfig.json`. The TypeScript-application exist in `src/ts/`. The application entry point is `App.ts` which adds three modules that can be found in `src/ts/modules/`. The modules uses models (`src/ts/models`) to consume the API.
 
 #### Sass
 
@@ -30,7 +34,7 @@ The Sass stylesheets are divides in three separate files:
 
 - `_base.scss` holds resets and basic style, colors, typography and overall layout. 
 - ` _utilities.scss` holds variables, mixins and helper classes.
-_ `_modules.scss` holds style specific to different modules.
+- `_modules.scss` holds style specific to different modules.
 
 ## Project with three parts
 
