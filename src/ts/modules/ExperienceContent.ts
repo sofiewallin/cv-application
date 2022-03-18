@@ -68,7 +68,7 @@ export default class ExperienceContent extends Module implements IModule {
             this.module.append(columnDiv);
 
             // Create heading and add to work experiences column
-            const heading = await this.createHeading(3, 'Work');
+            const heading = await this.createHeading(3, 'Work', ['heading', 'small-heading']);
             columnDiv.append(heading);
 
             // Add list of work experiences to column
@@ -86,7 +86,7 @@ export default class ExperienceContent extends Module implements IModule {
             this.module.append(columnDiv);
 
             // Create heading and add to work experiences column
-            const heading = await this.createHeading(3, 'Education');
+            const heading = await this.createHeading(3, 'Education', ['heading', 'small-heading']);
             columnDiv.append(heading);
 
             // Add list of work experiences to column
@@ -132,7 +132,7 @@ export default class ExperienceContent extends Module implements IModule {
                 } else {
                     headingInnerHTML = workExperience.role;
                 }
-                const heading = await this.createHeading(4, headingInnerHTML);
+                const heading = await this.createHeading(4, headingInnerHTML, ['experience-heading']);
                 article.append(heading);
     
                 // Add list item to list
@@ -151,7 +151,7 @@ export default class ExperienceContent extends Module implements IModule {
             if (courses.length > 0) {
                 // Create list item with heading
                 coursesListItem = await this.createListItem('selected-courses');
-                const coursesHeading = await this.createHeading(4, 'Selected courses');
+                const coursesHeading = await this.createHeading(4, 'Selected courses', ['heading', 'xs-heading']);
                 coursesListItem.appendChild(coursesHeading);
 
                 // Create ul list and add to list item
@@ -174,7 +174,7 @@ export default class ExperienceContent extends Module implements IModule {
 
                 // Create degree heading if there is a degree and add to article
                 if (education.degree) {
-                    const degreeHeading = await this.createHeading(4, education.degree);
+                    const degreeHeading = await this.createHeading(4, education.degree, ['degree-heading']);
                     article.append(degreeHeading);
                 }
 
@@ -191,7 +191,7 @@ export default class ExperienceContent extends Module implements IModule {
                 } else {
                     headingLevel = (education.degree) ? 5 : 4;
                 }
-                const heading = await this.createHeading(headingLevel, headingInnerHTML);
+                const heading = await this.createHeading(headingLevel, headingInnerHTML, ['experience-heading']);
                 article.append(heading);
 
                 // Add list item to nested courses list if course and to top list if program

@@ -57,7 +57,7 @@ export default class ProjectsContent extends Module implements IModule {
         let listItems: HTMLLIElement[] = [];
         const result = this.projects.map(async project => {
             // Create list item
-            const listItem = await this.createListItem(`project-${project.id}`);
+            const listItem = await this.createListItem(`project-${project.id}`, ['project']);
 
             // Create article and add to list item
             const article = await this.createArticle();
@@ -71,22 +71,27 @@ export default class ProjectsContent extends Module implements IModule {
                 ['project-logo'] // classes
             );
             article.append(figure);
+
+            // Create text container and add to article
+            const textContainer = await this.createDiv(['text-container']);
+            article.append(textContainer);
             
-            // Create title heading and add to article
-            const titleHeading = await this.createHeading(3, project.title);
-            article.append(titleHeading);
+            // Create title heading and add to text container
+            const titleHeading = await this.createHeading(3, project.title, ['heading', 'medium-heading']);
+            textContainer.append(titleHeading);
             
-            // Create paragraph with project type and project description if there is a description
+            /* Create paragraph with project type and project description 
+            if there is a description and add to text container */
             if (project.description) {
                 const paragraph = await this.createParagraph(
                     `<span class="project-type">${project.type} project &#8212;</span> ${project.description}`);
-                article.append(paragraph);
+                textContainer.append(paragraph);
             }
 
-            // Create link to website if there is one
+            // Create link to website if there is one and add to text container
             if (project.website) {
                 const link = await this.createLink(project.website, 'View project');
-                article.append(link);
+                textContainer.append(link);
             }
 
             // Add list item to list

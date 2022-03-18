@@ -10,11 +10,13 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     devServer: {
         static: './dist',
+        port: 8060,
         watchFiles: ['./src/**/*.html']
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
+            favicon: './src/favicon.ico',
             filename: 'index.html'
         })
     ],

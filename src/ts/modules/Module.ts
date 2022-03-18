@@ -123,9 +123,14 @@ export default class Module {
      * Creates and returns a li element
      * with optional id.
      */
-     async createListItem(id?: string): Promise<HTMLLIElement> {
+     async createListItem(id?: string, htmlClasses?: string[]): Promise<HTMLLIElement> {
         const li = document.createElement('li') as HTMLLIElement;
         if (id) li.id = id;
+        if (htmlClasses) {
+            htmlClasses.forEach(htmlClass => {
+                li.classList.add(htmlClass);
+            });
+        }
 
         return li;
     }

@@ -89,11 +89,11 @@ export default class SkillsContent extends Module implements IModule {
             container.append(columnDiv);
 
             // Create heading and add to skills column
-            const heading = await this.createHeading(3, skillType);
+            const heading = await this.createHeading(3, skillType, ['heading', 'small-heading']);
             columnDiv.append(heading);
 
             // Create unordered list with created list items
-            const skillList = await this.createUlList(listItems, [`${skillType.toLowerCase()}-skill-list`]);
+            const skillList = await this.createUlList(listItems, ['skill-list', `${skillType.toLowerCase()}-skill-list`]);
             columnDiv.append(skillList);
         }
         
