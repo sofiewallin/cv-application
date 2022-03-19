@@ -302,13 +302,17 @@
 
 .project {
 
-    @include breakpoint(desktop-small) {
-        .text-container {
+    .text-container {
+        width: 100%;
+
+        @include breakpoint(desktop-small) {
             padding-top: 48px;
             padding-left: 98px;
         }
+    }
 
-        &:nth-child(even) {
+    &:nth-child(even) {
+        @include breakpoint(desktop-small) {
             .project-logo,
             .text-container {
                 grid-row: 1/2;
@@ -481,14 +485,33 @@
 
 .contact-links li {
     @include inline-block;
+    padding-right: 23px;
+    position: relative;
 
     &::after {
+        @include pseudo-block;
         color: $gray-green;
-        content: ' / ';
+        content: '/';
+        margin-left: -15px;
+        left: 100%;
+        top: 0;
     }
 
-    &:last-child::after {
-        content: '';
+    &:last-child {
+        padding-right: 0;
+
+        &::after {
+            content: '';
+        }
+    }
+
+    @include breakpoint(tablet) {
+        padding-right: 28px;
+    
+        &::after {
+            margin-left: -18px;
+
+        }
     }
 }
 
